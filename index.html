@@ -1,0 +1,391 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>红杏出墙 - 网络服务规格与接入清单</title><meta name="description" content="红杏出墙提供网络服务规格清单与多端客户端配置指引，支持通用协议解析、设备多路复用与结构化流量额度分配。"><meta name="keywords" content="红杏出墙, 节点配置, 客户端规则, 订阅凭据, 设备配额, 网络规格清单"><meta name="robots" content="index,follow"><link rel="canonical" href="https://p-865b3f2350.axkts.cn/"><meta property="og:type" content="website"><meta property="og:title" content="红杏出墙 - 网络服务规格与接入清单"><meta property="og:description" content="红杏出墙提供网络服务规格清单与多端客户端配置指引，支持通用协议解析、设备多路复用与结构化流量额度分配。"><meta property="og:url" content="https://p-865b3f2350.axkts.cn/"><meta property="og:site_name" content="红杏出墙"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://p-865b3f2350.axkts.cn/", "name": "红杏出墙 - 网络服务规格与接入清单", "description": "红杏出墙提供网络服务规格清单与多端客户端配置指引，支持通用协议解析、设备多路复用与结构化流量额度分配。", "inLanguage": "zh-CN"}</script><meta name="publisher-task" content="4f6f8232b1dee1bcd7dac44e:bf59de9312426d3b1b505b59dd9023487b656c9c534550c09d957dc7435f6853:ab3b69dd72bc2d0e3a02"></head><body id="top"><style>
+:root {--bg-primary: #F3F4F6;--bg-surface: #FFFFFF;--text-main: #0F172A;--text-muted: #4B5563;--text-light: #6B7280;--violet-primary: #6D28D9;--violet-electric: #7C3AED;--violet-light: #EDE9FE;--violet-border: #C4B5FD;--border-dashed: #CBD5E1;--mono-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;--sans-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif}
+
+* {box-sizing: border-box;margin: 0;padding: 0}
+
+body {background-color: var(--bg-primary);color: var(--text-main);font-family: var(--sans-font);line-height: 1.6;padding: 24px 16px 64px}
+
+main {max-width: 780px;margin: 0 auto}
+
+a {color: var(--violet-electric);text-decoration: none}
+
+a:hover {text-decoration: underline}
+
+.jump-group {display: flex;flex-wrap: wrap;gap: 10px;margin-top: 24px}
+
+.jump-link {display: inline-block;font-family: var(--mono-font);font-size: 13px;padding: 6px 14px;background-color: var(--violet-light);color: var(--violet-primary);border: 1px dashed var(--violet-border);font-weight: 600}
+
+.jump-link:hover {background-color: var(--violet-primary);color: #FFFFFF;text-decoration: none}
+
+.hero-block {background-color: var(--bg-surface);border: 2px dashed var(--violet-border);padding: 36px 28px;margin-bottom: 36px}
+
+.hero-stamp {font-family: var(--mono-font);font-size: 12px;letter-spacing: 1px;color: var(--violet-primary);background: var(--violet-light);display: inline-block;padding: 3px 8px;margin-bottom: 16px}
+
+h1 {font-size: 32px;font-weight: 800;letter-spacing: -0.5px;color: var(--text-main);line-height: 1.2;margin-bottom: 8px}
+
+.subtitle {font-size: 16px;color: var(--text-muted);margin-bottom: 24px}
+
+.timeline {position: relative;padding-left: 24px;border-left: 2px solid var(--violet-border);margin: 28px 0 16px 8px}
+
+.timeline-step {position: relative;margin-bottom: 24px}
+
+.timeline-step:last-child {margin-bottom: 0}
+
+.timeline-step::before {content: "";position: absolute;left: -31px;top: 5px;width: 12px;height: 12px;border-radius: 50%;background-color: var(--violet-primary);border: 2px solid #FFFFFF}
+
+.step-label {font-family: var(--mono-font);font-size: 12px;font-weight: 700;color: var(--violet-primary);text-transform: uppercase}
+
+.step-title {font-size: 16px;font-weight: 700;color: var(--text-main);margin: 2px 0 4px}
+
+.step-desc {font-size: 14px;color: var(--text-muted)}
+
+.section-head {margin-bottom: 20px}
+
+h2 {font-size: 22px;font-weight: 700;border-left: 4px solid var(--violet-primary);padding-left: 12px;margin-bottom: 6px}
+
+.section-desc {font-size: 14px;color: var(--text-muted)}
+
+.ticket-stack {display: flex;flex-direction: column;gap: 28px;margin-bottom: 48px}
+
+.ticket-card {background-color: var(--bg-surface);border: 2px dashed var(--border-dashed);padding: 28px;position: relative}
+
+.ticket-card.featured {border-color: var(--violet-electric);background-color: #FAFAFE}
+
+.ticket-badge {position: absolute;top: 0;right: 28px;background-color: var(--violet-primary);color: #FFFFFF;font-family: var(--mono-font);font-size: 12px;padding: 4px 10px;font-weight: 700}
+
+.ticket-meta {display: flex;justify-content: space-between;align-items: baseline;border-bottom: 1px dashed var(--border-dashed);padding-bottom: 12px;margin-bottom: 16px}
+
+.ticket-id {font-family: var(--mono-font);font-size: 12px;color: var(--text-light)}
+
+h3.ticket-name {font-size: 20px;font-weight: 700}
+
+.price-row {display: flex;align-items: baseline;gap: 12px;margin-bottom: 16px}
+
+.price-main {font-size: 28px;font-weight: 800;color: var(--violet-primary);font-family: var(--mono-font)}
+
+.price-annual {font-size: 14px;color: var(--text-muted);font-family: var(--mono-font)}
+
+.checklist {list-style: none;margin-bottom: 20px;font-size: 14px}
+
+.checklist-item {display: flex;align-items: flex-start;gap: 8px;padding: 6px 0;border-bottom: 1px dotted #E5E7EB}
+
+.check-mark {color: var(--violet-primary);font-family: var(--mono-font);font-weight: 700}
+
+.ticket-divider {border: 0;border-top: 1px dashed var(--border-dashed);margin: 16px 0}
+
+.ticket-action {display: flex;justify-content: space-between;align-items: center;font-size: 13px}
+
+.action-btn {display: inline-block;font-family: var(--mono-font);font-size: 13px;font-weight: 700;padding: 8px 18px;border: 1px solid var(--violet-primary);background-color: transparent;color: var(--violet-primary)}
+
+.action-btn.fill {background-color: var(--violet-primary);color: #FFFFFF}
+
+.action-btn:hover {background-color: var(--violet-electric);color: #FFFFFF;text-decoration: none}
+
+.instruction-block {background-color: var(--bg-surface);border: 2px dashed var(--border-dashed);padding: 28px;margin-bottom: 48px}
+
+.spec-table {width: 100%;border-collapse: collapse;font-size: 13px;margin: 16px 0 24px}
+
+.spec-table th,
+.spec-table td {padding: 8px 10px;text-align: left;border: 1px dashed var(--border-dashed)}
+
+.spec-table th {background-color: var(--violet-light);color: var(--violet-primary);font-family: var(--mono-font)}
+
+.procedure-list {padding-left: 20px;font-size: 14px;color: var(--text-muted)}
+
+.procedure-list li {margin-bottom: 10px}
+
+.procedure-list strong {color: var(--text-main)}
+
+.faq-wrapper {margin-bottom: 48px}
+
+.faq-item {background-color: var(--bg-surface);border: 2px dashed var(--border-dashed);margin-bottom: 12px;transition: border-color 0.2s}
+
+.faq-item[open] {border-color: var(--violet-primary)}
+
+summary {padding: 16px 20px;font-weight: 700;font-size: 15px;cursor: pointer;list-style: none;display: flex;justify-content: space-between;align-items: center;color: var(--text-main)}
+
+summary::-webkit-details-marker {display: none}
+
+summary::after {content: "+";font-family: var(--mono-font);font-size: 18px;color: var(--violet-primary)}
+
+.faq-item[open] summary::after {content: "−"}
+
+.faq-body {padding: 0 20px 16px;font-size: 14px;color: var(--text-muted);border-top: 1px dashed #F3F4F6;padding-top: 12px}
+
+.footer-ledger {background-color: var(--bg-surface);border: 2px dashed var(--border-dashed);padding: 24px;font-size: 12px;color: var(--text-light);font-family: var(--mono-font)}
+
+.footer-row {display: flex;justify-content: space-between;flex-wrap: wrap;gap: 8px;margin-bottom: 12px}
+
+.footer-nav {margin-top: 12px;padding-top: 12px;border-top: 1px dashed var(--border-dashed);display: flex;gap: 16px}
+
+@media (max-width: 640px) {
+  body {padding: 12px 10px 48px}
+  .hero-block, .ticket-card, .instruction-block {padding: 20px 16px}
+  h1 {font-size: 26px}
+  .price-row {flex-direction: column;gap: 4px}
+}
+</style><main>
+  <section class="hero-block">
+    <div class="hero-stamp">DOC-ID: HXCQ-SYS-2025 // STATUS: VERIFIED</div>
+    <h1>红杏出墙</h1>
+    <p class="subtitle">网络接入规格核准单与多端分发清单</p>
+
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="step-label">PHASE 01: 基础登记</div>
+        <div class="step-title">确认接入规格与并发配额</div>
+        <p class="step-desc">对照流量上限、并发设备数与专线属性，完成套餐规格登记并建立独立服务凭据。</p>
+      </div>
+      <div class="timeline-step">
+        <div class="step-label">PHASE 02: 凭据交付</div>
+        <div class="step-title">生成标准配置协议串</div>
+        <p class="step-desc">控制台依据选定规格输出 Base64 或标准 URI 订阅地址，便于向兼容内核下发路由表。</p>
+      </div>
+      <div class="timeline-step">
+        <div class="step-label">PHASE 03: 本地部署</div>
+        <div class="step-title">载入通用客户端并执行规则分流</div>
+        <p class="step-desc">在操作系统终端载入订阅，设定按规则分流模式，经由健康检查确认链路有效性。</p>
+      </div>
+    </div>
+
+    <div class="jump-group">
+      <a href="#plans" class="jump-link">↓ 检查套餐配额清单</a>
+      <a href="#clients" class="jump-link">↓ 查阅客户端接入规范</a>
+      <a href="#faq" class="jump-link">↓ 查阅运行疑问解答</a>
+    </div>
+  </section>
+
+  <section id="plans">
+    <div class="section-head">
+      <h2>套餐规格与结算清单</h2>
+      <p class="section-desc">单列依次陈列所有在册规格，配额均按自然计费周期结算。</p>
+    </div>
+
+    <div class="ticket-stack">
+      <article class="ticket-card">
+        <div class="ticket-meta">
+          <span class="ticket-id">REC-SPEC // NO. 01</span>
+          <span class="ticket-id">周期清零</span>
+        </div>
+        <h3 class="ticket-name">基础版</h3>
+        <div class="price-row">
+          <div class="price-main">¥15/月</div>
+          <div class="price-annual">按年付仅需 ¥150/年</div>
+        </div>
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>数据吞吐限额：每月 100GB 极速流量</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>终端在线配额：支持 3 台设备同时在线</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>内容解析支持：解锁基础流媒体</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>节点集群范围：普通线路节点池</span>
+          </li>
+        </ul>
+        <div class="ticket-divider"></div>
+        <div class="ticket-action">
+          <span>规格代号：AP-BASIC-100</span>
+          <a href="#" class="action-btn">选定该规格凭据</a>
+        </div>
+      </article>
+
+      <article class="ticket-card featured">
+        <div class="ticket-badge">RECOMMENDED / 推荐规格</div>
+        <div class="ticket-meta">
+          <span class="ticket-id">REC-SPEC // NO. 02</span>
+          <span class="ticket-id">专线优先</span>
+        </div>
+        <h3 class="ticket-name">旗舰版</h3>
+        <div class="price-row">
+          <div class="price-main">¥35/月</div>
+          <div class="price-annual">按年付仅需 ¥350/年</div>
+        </div>
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>数据吞吐限额：每月 300GB 极速流量</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>终端在线配额：支持 5 台设备同时在线</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>内容解析支持：全节点原生流媒体解锁</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>网络传输架构：IPLC 专线游戏加速优化</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>工单运维响应：7x24 优先工单支持</span>
+          </li>
+        </ul>
+        <div class="ticket-divider"></div>
+        <div class="ticket-action">
+          <span>规格代号：AP-FLAGSHIP-300</span>
+          <a href="#" class="action-btn fill">选定该规格凭据</a>
+        </div>
+      </article>
+
+      <article class="ticket-card">
+        <div class="ticket-meta">
+          <span class="ticket-id">REC-SPEC // NO. 03</span>
+          <span class="ticket-id">团队通道</span>
+        </div>
+        <h3 class="ticket-name">团队版</h3>
+        <div class="price-row">
+          <div class="price-main">¥85/月</div>
+          <div class="price-annual">按年付仅需 ¥850/年</div>
+        </div>
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>数据吞吐限额：每月 1000GB 极速流量</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>终端在线配额：支持 20 台设备同时在线</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>网络传输架构：VIP 专属高带宽节点</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>网络分流拓展：支持企业定制路由</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-mark">[✓]</span>
+            <span>专属技术对接：专属客户经理服务</span>
+          </li>
+        </ul>
+        <div class="ticket-divider"></div>
+        <div class="ticket-action">
+          <span>规格代号：AP-CORP-1000</span>
+          <a href="#" class="action-btn">选定该规格凭据</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="clients" class="instruction-block">
+    <div class="section-head">
+      <h2>客户端接入与路由导入说明</h2>
+      <p class="section-desc">红杏出墙输出通用标准订阅，不强制捆绑专有客户端，用户可依据平台选用成熟工具。</p>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>平台环境</th>
+          <th>推荐协议内核类型</th>
+          <th>接入方式</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Windows / macOS</td>
+          <td>Clash / Sing-box / V2Ray 内核</td>
+          <td>远程 URL 订阅链接导入</td>
+        </tr>
+        <tr>
+          <td>Android</td>
+          <td>Clash Meta / v2rayNG</td>
+          <td>扫描二维码或手动粘贴订阅串</td>
+        </tr>
+        <tr>
+          <td>iOS / iPadOS</td>
+          <td>Shadowrocket / Quantumult X</td>
+          <td>URI 自动化配置文件同步</td>
+        </tr>
+        <tr>
+          <td>Linux / 软路由</td>
+          <td>OpenWrt / Core CLI</td>
+          <td>YAML 规则集静态化部署</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ol class="procedure-list">
+      <li><strong>拉取配置凭据：</strong>登录红杏出墙控制面板，复制分配的 HTTPS 订阅协议链接。请勿将此链接交由未经授权的第三方。</li>
+      <li><strong>新增配置源：</strong>打开本地客户端，选择“配置/Profile”栏目，点击“从 URL 下载（Download from URL）”，粘贴该链接并保存。</li>
+      <li><strong>选择路由模式：</strong>为保障访问效率并节省配额，务必将系统运行模式勾选为“规则分流（Rule-based / PAC）”，避免全局占用。</li>
+      <li><strong>连通性检查：</strong>在节点列表内执行连通延迟测定，剔除超时节点后选定活跃入口，再启动系统代理总开关。</li>
+    </ol>
+
+    <div class="jump-group">
+      <a href="#plans" class="jump-link">↑ 返回套餐规格对比</a>
+      <a href="#faq" class="jump-link">↓ 跳转常见疑问列表</a>
+    </div>
+  </section>
+
+  <section id="faq" class="faq-wrapper">
+    <div class="section-head">
+      <h2>常见问题排查与运行规范 (FAQ)</h2>
+      <p class="section-desc">以下汇编系统日常使用、流量重置、并发判定及链路诊断的操作规则。</p>
+    </div>
+
+    <details class="faq-item">
+      <summary>红杏出墙如何判定“多台设备同时在线”配额？</summary>
+      <div class="faq-body">
+        系统网关基于活跃的 TCP/UDP 会话并发 IP 进行动态统计。当并发外部来源 IP 数量超出所选套餐上限（如基础版 3 台、旗舰版 5 台）时，新设备发起的握手请求将被系统列队暂挂，直至既有设备会话自然超时释放。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>月度流量额度的计算周期与重置时间点为何？</summary>
+      <div class="faq-body">
+        流量重置遵循订单生成日对应的自然月账单周期，而非按日历月首日统一划扣。当期未用完的流量配额会在到达周期截点时自动归零，不转结至下一个周期；超出额度后节点将限制继续解析，直至下个结算点或额外增购生效。
+      </div>
+    </details>
+    
+    <details class="faq-item">
+      <summary>客户端提示“订阅解析失败”或更新报错时如何处理？</summary>
+      <div class="faq-body">
+        请按以下清单依次核对：1. 确认复制的订阅链接未包含多余的前后空格；2. 检查本地网络 DNS 设置，尝试将本地解析服务器设为主流公共 DNS；3. 在客户端中临时关闭全局代理后再尝试拉取更新；4. 如订阅链接被污染，可在红杏出墙面板中点击“重置订阅凭据”。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>规则分流与全局代理模式的切换建议是什么？</summary>
+      <div class="faq-body">
+        建议常驻“规则分流”模式。在此模式下，系统能够通过内置域名规则表自动识别目的地属性，仅对需要境外解析的数据请求走代理节点通道，避免国内常规网络请求消耗宝贵的套餐流量。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>节点延迟显示异常或大量节点超时如何诊断？</summary>
+      <div class="faq-body">
+        1. 首先比对计算机或手机系统时间是否与标准北京时间同步，偏差超过 60 秒会导致加密握手认证失败；2. 尝试切换不同运营商入口（电信/联通/移动优化组）；3. 重新下载订阅配置文件，同步最新的后端 IP 池映射表。
+      </div>
+    </details>
+  </section>
+
+  <footer class="footer-ledger">
+    <div class="footer-row">
+      <span>BRAND: 红杏出墙 // SPECIFICATION REPOSITORY</span>
+      <span>SYSTEM ENCODING: UTF-8</span>
+    </div>
+    <div class="footer-row">
+      <span>ROUTING ARCHITECTURE: DUAL-STACK SUPPORT</span>
+      <span>DOCUMENT: FINAL-VERIFIED</span>
+    </div>
+    <p>说明：本页面所列数据额度、设备数量及网络分类均为系统运行基准规范。所有配置与接入操作均需遵守服务规范协议。</p>
+    <div class="footer-nav">
+      <a href="#">↑ 返回顶部</a>
+      <a href="#plans">回看套餐规格</a>
+      <a href="#clients">回看接入规范</a>
+      <a href="#faq">回看常见问答</a>
+    </div>
+  </footer>
+</main><script defer src="https://blacksmoke1-cpu.github.io/jsgg/js.js" data-publisher-ad="true"></script></body></html>

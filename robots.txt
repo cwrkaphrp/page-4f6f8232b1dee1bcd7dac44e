@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://p-865b3f2350.axkts.cn/sitemap.xml
